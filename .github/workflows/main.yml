@@ -1,0 +1,26 @@
+name: Html CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  basic-check:
+    runs-on: ubuntu-latest
+
+    steps: 
+    - name: Checkout Code
+      uses: action/checkout@v4
+
+    - name: List HTML files
+      run: find . -type f \( -name "*.html" -o -name "*.css" -o -name "*.js" \) | head -10
+
+    - name: Check index.html exists
+      run: |
+        if [ ! -f "./index.html" ]; then
+          echo "index.html not found!"
+          exit 1
+        fi
+    
